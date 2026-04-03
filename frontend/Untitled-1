@@ -1,0 +1,46 @@
+import { useState } from 'react';
+
+export default function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Check against the Vite environment variable
+    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+    } else {
+      alert("Incorrect password!");
+    }
+  };
+
+  // 1. If not authenticated, show the login form
+  if (!isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <form onSubmit={handleLogin} className="p-8 bg-white rounded shadow-md">
+          <h2 className="mb-4 text-xl font-bold">Admin Access</h2>
+          <input 
+            type="password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 mb-4 border rounded"
+            placeholder="Enter Admin Password"
+          />
+          <button type="submit" className="w-full p-2 text-white bg-blue-600 rounded">
+            Login
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  // 2. If authenticated, show the Admin Dashboard
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl font-bold">Welcome to the Admin Dashboard</h1>
+      <p>Here you can add new FAQs and Senior Profiles!</p>
+      {/* You will eventually put your forms to POST data to your backend here */}
+    </div>
+  );
+}

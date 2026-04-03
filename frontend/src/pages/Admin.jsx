@@ -2,12 +2,25 @@ import { useState, useEffect } from 'react';
 import { getQueries, createFaq } from '../lib/api';
 
 function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
   const [queries, setQueries] = useState([]);
   const [faqForm, setFaqForm] = useState({ category: 'Academics', question: '', answer: '' });
 
   useEffect(() => {
-    fetchQueries();
-  }, []);
+    if (isAuthenticated) {
+      fetchQueries();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+    } else {
+      alert("Incorrect password!");
+    }
+  };
 
   const fetchQueries = async () => {
     try {
@@ -23,10 +36,31 @@ function Admin() {
     try {
       await createFaq(faqForm);
       setFaqForm({ category: 'Academics', question: '', answer: '' });
+      alert("FAQ successfully added!");
     } catch (error) {
       console.error(error);
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] px-4">
+        <form onSubmit={handleLogin} className="p-8 bg-white rounded-xl shadow-sm border border-gray-200 w-full max-w-md">
+          <h2 className="mb-6 text-2xl font-bold text-center">Admin Login</h2>
+          <input 
+            type="password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 mb-4 border border-gray-300 rounded-lg outline-none focus:border-blue-500"
+            placeholder="Enter Admin Password"
+          />
+          <button type="submit" className="w-full bg-slate-900 text-white font-semibold py-3 rounded-lg hover:bg-slate-800 transition">
+            Access Dashboard
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto py-12 px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
