@@ -20,5 +20,17 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+router.patch('/:id/status', async (req, res) => {
+  try {
+    const updatedQuery = await Query.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status },
+      { new: true }
+    );
+    res.json(updatedQuery);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;

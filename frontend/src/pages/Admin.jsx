@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getQueries, createFaq } from '../lib/api';
+import { getQueries, createFaq, updateQueryStatus } from '../lib/api';
 
 function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -39,6 +39,15 @@ function Admin() {
       alert("FAQ successfully added!");
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleStatusUpdate = async (id) => {
+    try {
+      await updateQueryStatus(id, 'Resolved');
+      setQueries(queries.map(q => q._id === id ? { ...q, status: 'Resolved' } : q));
+    } catch (error) {
+      console.error("Failed to update status", error);
     }
   };
 
@@ -118,9 +127,17 @@ function Admin() {
                 </span>
               </div>
               <a href={`mailto:${query.senderEmail}`} className="text-sm text-blue-600 mb-3 inline-block">{query.senderEmail}</a>
-              <p className="text-gray-700 bg-gray-50 p-3 rounded-lg border border-gray-100 text-sm">
+              <p className="text-gray-700 bg-gray-50 p-3 rounded-lg border border-gray-100 text-sm mb-4">
                 {query.message}
               </p>
+              {query.status === 'Pending' && (
+                <button 
+                  onClick={() => handleStatusUpdate(query._id)}
+                  className="text-sm bg-green-50 text-green-600 border border-green-200 px-3 py-1.5 rounded hover:bg-green-100 transition"
+                >
+                  Mark as Resolved
+                </button>
+              )}
             </div>
           ))}
         </div>
