@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Query = require('../models/Query');
+const auth = require('../middleware/auth'); // IMPORT BOUNCER
 
+// 1. Application POST (PUBLIC - Anyone can submit a query)
 router.post('/', async (req, res) => {
   try {
     const newQuery = new Query(req.body);
@@ -12,7 +14,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+// 2. Fetch all queries GET (PROTECTED - Admin only)
+router.get('/', auth, async (req, res) => {
   try {
     const queries = await Query.find();
     res.json(queries);
@@ -20,7 +23,9 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-router.patch('/:id/status', async (req, res) => {
+
+// 3. Update Status PATCH (PROTECTED - Admin only)
+router.patch('/:id/status', auth, async (req, res) => {
   try {
     const updatedQuery = await Query.findByIdAndUpdate(
       req.params.id,
@@ -30,6 +35,16 @@ router.patch('/:id/status', async (req, res) => {
     res.json(updatedQuery);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+// 4. Delete Query DELETE (PROTECTED - Admin only)
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    await Query.findByIdAndDelete(req.params.id);
+    res.json({ message: "Query deleted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

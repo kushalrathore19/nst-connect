@@ -16,6 +16,9 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/nst_mvp', {
   useUnifiedTopology: true
 });
 
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
+
 app.use('/api/faqs', faqRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/queries', queryRoutes);
