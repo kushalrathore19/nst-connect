@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
-  name: String,
-  year: Number,
+  name: { type: String, required: true },
+  year: { type: String, required: true },
   techStack: [String],
-  calendlyLink: String,
-  isActive: Boolean,
-  whatsappNumber: { type: String } //added whatsappNumber field to store the student's WhatsApp number
+  calendlyLink: { type: String, required: true },
+  whatsappNumber: { type: String },
+  isApproved: { type: Boolean, default: false } 
 });
-
 module.exports = mongoose.model('Student', studentSchema);

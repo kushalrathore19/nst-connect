@@ -14,9 +14,12 @@ export const getStudents = () => api.get('/students');
 export const getQueries = () => api.get('/queries');
 export const createQuery = (queryData) => api.post('/queries', queryData);
 
-// NEW: Function to update query status from Pending to Resolved
+// Status and Approval Updates
 export const updateQueryStatus = (id, status) => api.patch(`/queries/${id}/status`, { status });
-
 export const createStudent = (studentData) => api.post('/students', studentData);
+
+// NEW: Mentor Approval Functions
+export const getPendingStudents = () => api.get('/students/pending');
+export const approveStudent = (id) => api.patch(`/students/${id}/approve`);
 
 export default api;
