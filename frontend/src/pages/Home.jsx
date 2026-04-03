@@ -4,14 +4,13 @@ import Magnetic from '../components/Magnetic';
 import LiveActivity from '../components/LiveActivity';
 
 function Home() {
-  const nstLogo = "://www.tribuneindia.com/sortd-servichttpse/imaginary/v22-01/jpg/large/high?url=dGhldHJpYnVuZS1zb3J0ZC1wcm8tcHJvZC1zb3J0ZC9tZWRpYWVkNmQxYzUwLTE1M2ItMTFmMC05YzRkLWExYjFjMjMzZTcyMi5qcGc=";
+  const nstLogo = "https://d3dyfaf3iutrxo.cloudfront.net/general/upload/f8853b74e6274770bff954565147aa8f.png";
   const nsatLink = "https://www.newtonschool.co/newton-school-of-technology-nst/apply-referral/?utm_source=referral&utm_medium=kushalrathore19&utm_campaign=btech-computer-science-nst-students-referral-invite-your-junior--portal-referral";
 
   return (
     <div className="min-h-screen bg-[#fafafa] text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
       <LiveActivity />
 
-      {/* --- HERO SECTION: Left Aligned for a more "Dashboard/Pro" feel --- */}
       <section className="max-w-7xl mx-auto pt-32 pb-20 px-8 border-b border-slate-200">
         <div className="flex flex-col lg:flex-row gap-16 items-start">
           <div className="flex-1">
@@ -58,7 +57,6 @@ function Home() {
             </div>
           </div>
 
-          {/* Technical Info Box (Instead of generic images) */}
           <div className="hidden lg:block w-96 bg-white border border-slate-200 p-8 rounded-2xl shadow-sm rotate-1">
             <div className="space-y-6">
               <div className="pb-4 border-b border-slate-100">
@@ -84,7 +82,6 @@ function Home() {
         </div>
       </section>
 
-      {/* --- BENTO GRID: Replaces the generic 1,2,3 layout --- */}
       <section className="max-w-7xl mx-auto px-8 py-24">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           
@@ -120,7 +117,6 @@ function Home() {
         </div>
       </section>
 
-      {/* --- FOOTER / CTA --- */}
       <footer className="max-w-7xl mx-auto px-8 pb-24">
         <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-12 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-center md:text-left">
